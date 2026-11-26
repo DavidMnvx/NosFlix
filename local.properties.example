@@ -20,3 +20,7 @@ tmdb.apiKey=
 
 # « perso » : logo NF à la place du mot nosflix (demande le dossier app/src/perso, absent de la version publique).
 #nosflix.edition=public
+
+# Signature de la version « release » : chemin d'un fichier keystore.properties
+# (storeFile, storePassword, keyAlias, keyPassword). Sans lui : clé de test (debug).
+#nosflix.signing=C:/chemin/vers/keystore.properties

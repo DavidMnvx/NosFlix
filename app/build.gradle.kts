@@ -28,6 +28,11 @@ val remoteServers: String = localProperties.getProperty("nosflix.remoteServers",
 //                          se met à jour par le service NosFlix de son serveur, pas par GitHub)
 val updateRepo: String = localProperties.getProperty("nosflix.updateRepo", if (edition == "perso") "" else "DavidMnvx/NosFlix").trim()
 fun quoted(value: String) = "\"" + value.replace("\\", "\\\\").replace("\"", "\\\"") + "\""
+//   nosflix.signing        chemin d'un keystore.properties (storeFile, storePassword, keyAlias, keyPassword)
+//                          pour signer la version « release » ; sans lui, la clé de test (debug) est utilisée.
+val signingFile: File? = localProperties.getProperty("nosflix.signing", "").trim()
+    .takeIf { it.isNotEmpty() }?.let { rootProject.file(it) }?.takeIf { it.exists() }
+val signingProps: Properties? = signingFile?.let { f -> Properties().apply { f.inputStream().use { load(it) } } }
 
 // Numéro de version qui augmente tout seul à chaque fabrication (minutes depuis le 1er janvier 2026) :
 // l'appli reconnaît ainsi qu'une version déposée sur le serveur est plus récente qu'elle.
@@ -61,6 +66,17 @@ android {
         buildConfigField("String", "UPDATE_REPO", quoted(updateRepo))
     }
 
+    signingConfigs {
+        if (signingProps != null && signingFile != null) {
+            create("release") {
+                storeFile = File(signingFile.parentFile, signingProps.getProperty("storeFile"))
+                storePassword = signingProps.getProperty("storePassword")
+                keyAlias = signingProps.getProperty("keyAlias")
+                keyPassword = signingProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     // Icône et bannière TV : logo NF (perso) ou le mot « nosflix » (version publique).
     sourceSets.getByName("main").res.srcDir(if (edition == "perso") "src/perso/res" else "src/public/res")
 
@@ -85,8 +101,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Signée avec la même clé que la version de test : elle s'installe par-dessus, sans rien perdre.
-            signingConfig = signingConfigs.getByName("debug")
+            // Signée avec la clé de nosflix.signing (version publique), sinon avec la clé de test :
+            // elle s'installe alors par-dessus la version de test, sans rien perdre.
+            signingConfig = signingConfigs.getByName(if (signingProps != null) "release" else "debug")
         }
     }
 
