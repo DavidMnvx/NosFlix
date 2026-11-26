@@ -1,0 +1,22 @@
+# Copie ce fichier en « local.properties » : il reste sur ton PC et n'est jamais partagé.
+# Tout est facultatif sauf sdk.dir (Android Studio le remplit tout seul).
+
+sdk.dir=C\:\\Users\\toi\\AppData\\Local\\Android\\Sdk
+
+# Clé TMDB (affiches, tendances, sorties ciné). Gratuite sur themoviedb.org.
+# Sans elle, chacun peut aussi coller sa clé dans l'appli : Paramètres → Clé TMDB.
+tmdb.apiKey=
+
+# Adresse proposée à la connexion, et utilisateur proposé.
+#nosflix.homeServer=http://192.168.1.10:8096
+#nosflix.defaultUser=
+
+# Autres adresses du même serveur, essayées quand celle de la maison ne répond pas
+# (Tailscale, adresse sur Internet…), séparées par des virgules.
+#nosflix.remoteServers=http://100.64.0.1:8096
+
+# Dépôt GitHub d'où viennent les mises à jour (vide : aucune).
+#nosflix.updateRepo=DavidMnvx/NosFlix
+
+# « perso » : logo NF à la place du mot nosflix (demande le dossier app/src/perso, absent de la version publique).
+#nosflix.edition=public

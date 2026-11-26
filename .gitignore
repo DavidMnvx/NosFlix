@@ -1,0 +1,17 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/app/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+.kotlin/
+*.apk
+*.aab
+# Clés de signature : jamais dans le dépôt.
+*.jks
+*.keystore
+keystore.properties

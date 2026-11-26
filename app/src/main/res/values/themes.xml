@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.NosFlix" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/nf_black</item>
+        <item name="android:colorBackground">@color/nf_black</item>
+        <item name="android:colorAccent">@color/nf_red</item>
+    </style>
+</resources>
